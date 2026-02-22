@@ -2,10 +2,10 @@
 
 Desktop LED Sync is a standalone Windows application designed to automatically extract the dominant color from your currently playing music's album art (Tidal, Spotify, Apple Music) and push those colors to your smart LED strips in real-time.
 
-Crucially, this application sits entirely on your local network. It **bypasses Home Assistant**, requires zero cloud APIs, and communicates directly with your lights via your local Wi-Fi.
+Crucially, this application acts as a **standalone desktop client**. It sits entirely on your local network and communicates directly with your lights via your local Wi-Fi, making it a perfect lightweight solution for users who want dynamic lighting without needing to configure a full home automation server ecosystem.
 
 ## Core Features
-- **Local Application:** No Home Assistant server required. Runs quietly in the background on your Windows PC.
+- **Standalone Local Application:** Runs quietly in the background on your Windows PC, offering an alternative for users who don't have a Home Assistant instance running.
 - **Universal Media Detection:** Automatically detects track changes across any app that uses standard Windows Media Controls (Tidal, Spotify, browsers, etc.).
 - **Live Album Art Extraction:** Grabs the thumbnail of the currently playing song and runs it through a `colorthief` algorithm to find the dominant RGB color.
 - **Provider Architecture:** Built with an extensible plugin system. Currently supports encrypted local **Tapo** connections and unauthenticated JSON **WLED** endpoints.
