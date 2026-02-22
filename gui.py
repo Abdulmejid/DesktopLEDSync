@@ -12,6 +12,7 @@ from pystray import MenuItem as item
 from PIL import Image, ImageDraw
 import winshell
 import win32com.client
+import keyring
 
 # Configure the modern look of the window
 ctk.set_appearance_mode("System")  # Follows Windows Dark/Light mode
@@ -96,7 +97,18 @@ class DesktopLEDSyncGUI(ctk.CTk):
             "Enter your Tapo account password.\n(Leave blank if using WLED)").pack(side="left", padx=5)
         
         self.pass_entry = ctk.CTkEntry(self.settings_frame, show="*", placeholder_text="Leave blank for WLED")
-        self.pass_entry.insert(0, self.config.get("credentials", {}).get("password", ""))
+        
+        saved_pwd = self.config.get("credentials", {}).get("password", "")
+        saved_user = self.config.get("credentials", {}).get("username", "")
+        if saved_pwd == "USE_KEYRING" and saved_user:
+            try:
+                retrieved = keyring.get_password("DesktopLEDSync", saved_user)
+                if retrieved:
+                    saved_pwd = retrieved
+            except Exception:
+                pass
+                
+        self.pass_entry.insert(0, saved_pwd)
         self.pass_entry.pack(pady=(5, 10), padx=20, fill="x")
 
         # 4b. Save & Apply Button
@@ -306,7 +318,15 @@ class DesktopLEDSyncGUI(ctk.CTk):
         user = self.user_entry.get()
         pwd = self.pass_entry.get()
         if user or pwd:
-            self.config["credentials"] = {"username": user, "password": pwd}
+            if user and pwd and pwd != "USE_KEYRING":
+                try:
+                    keyring.set_password("DesktopLEDSync", user, pwd)
+                    self.config["credentials"] = {"username": user, "password": "USE_KEYRING"}
+                except Exception as e:
+                    self.append_log(f"Failed to save password securely: {e}", "error")
+                    self.config["credentials"] = {"username": user, "password": pwd}
+            else:
+                self.config["credentials"] = {"username": user, "password": pwd}
         else:
             self.config["credentials"] = {}
 

@@ -42,7 +42,24 @@ def load_config():
         sys.exit(1)
     
     with open(CONFIG_FILE, "r") as f:
-        return json.load(f)
+        config = json.load(f)
+
+    # Automatic migration: if an old plaintext password exists, move it to Keyring
+    creds = config.get("credentials", {})
+    user = creds.get("username", "")
+    pwd = creds.get("password", "")
+    if user and pwd and pwd != "USE_KEYRING":
+        try:
+            import keyring
+            keyring.set_password("DesktopLEDSync", user, pwd)
+            config["credentials"]["password"] = "USE_KEYRING"
+            with open(CONFIG_FILE, "w") as f:
+                json.dump(config, f, indent=2)
+            print("Successfully migrated plaintext password to secure Windows Keyring.")
+        except Exception as e:
+            print(f"Failed to migrate password to Keyring: {e}")
+            
+    return config
 
 # --- Media Extraction Logic ---
 async def get_media_session():

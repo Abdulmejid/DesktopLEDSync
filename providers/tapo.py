@@ -3,6 +3,7 @@ import colorsys
 from plugp100.common.credentials import AuthCredential
 from plugp100.new.device_factory import connect, DeviceConnectConfiguration
 from plugp100.new.components.light_component import LightComponent
+import keyring
 
 from . import LightProvider
 
@@ -14,7 +15,16 @@ class TapoProvider(LightProvider):
     def __init__(self, config):
         super().__init__(config)
         self.username = config.get("credentials", {}).get("username")
-        self.password = config.get("credentials", {}).get("password")
+        raw_pwd = config.get("credentials", {}).get("password")
+        
+        if raw_pwd == "USE_KEYRING" and self.username:
+            try:
+                self.password = keyring.get_password("DesktopLEDSync", self.username)
+            except Exception as e:
+                self.password = None
+                print(f"[Tapo] Failed to load password from keyring: {e}")
+        else:
+            self.password = raw_pwd
         
         if not self.username or not self.password:
             raise ValueError("Tapo provider requires 'username' and 'password' in config.json credentials.")

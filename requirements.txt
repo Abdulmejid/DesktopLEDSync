@@ -11,3 +11,4 @@ Pillow
 # Auto-Start
 winshell
 pypiwin32
+keyring
