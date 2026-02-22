@@ -1,0 +1,13 @@
+winsdk
+colorthief
+Pillow
+requests
+# Specific libraries for light providers
+plugp100
+# User Interface
+customtkinter
+pystray
+Pillow
+# Auto-Start
+winshell
+pypiwin32

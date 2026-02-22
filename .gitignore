@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Executables and builds
+/build/
+/dist/
+*.exe
+*.pkg
+*.spec
+
+# User Configuration
+config.json
+
+# Environment
+venv/
+.env
